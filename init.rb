@@ -6,7 +6,7 @@ Redmine::Plugin.register :redmine_lark do
   name 'Redmine Lark Bot'
   author 'Shopperplus Inc.'
   description 'Lark bot with redmine'
-  version '1.0'
+  version '1.1'
   url 'https://github.com/shopperplus/redmine_lark'
   author_url 'https://github.com/shopperplus/redmine_lark'
 

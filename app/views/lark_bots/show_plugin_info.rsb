@@ -1,4 +1,4 @@
 api.plugin do
   api.name "redmine_lark"
-  api.api_version "1.0"
+  api.api_version "1.1"
 end

@@ -9,15 +9,16 @@ module Redmine
 
       def self.get_lark_issue_data(issue_or_journal)
         issue = nil
-        is_reply = false
+        event_title = ""
         content = ""
         if issue_or_journal.is_a?(Issue)
           issue = issue_or_journal
           content = issue_or_journal.description
+          event_title = "**#{issue_or_journal.author.name}**创建了Issue"
         elsif issue_or_journal.is_a?(Journal)
           issue = issue_or_journal.issue
-          is_reply = true
           content = issue_or_journal.notes
+          event_title = "**#{issue_or_journal.user.name}**更新了Issue"
         end
         custom_fields_data = issue.custom_field_values.map do |field|
           {
@@ -40,6 +41,16 @@ module Redmine
             }
           },
           elements: [
+            {
+              tag: "div",
+              text: {
+                tag: "lark_md",
+                content: "#{event_title}"
+              }
+            },
+            {
+              tag: "hr"
+            },
             {
               tag: "div",
               fields: [
@@ -106,7 +117,7 @@ module Redmine
             }
           ]
         }
-        data[:elements].first[:fields].concat(custom_fields_data)
+        data[:elements][2][:fields].concat(custom_fields_data)
         {
           chat_id: Time.now.strftime("%Y%m%d%H%M%S%L"),
           msg_type: "interactive",

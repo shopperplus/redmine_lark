@@ -18,7 +18,7 @@ module Redmine
         when :issue_update
           issue = issue_or_journal
           content = ""
-          event_title = "**#{issue_or_journal.author.name}**更新了Issue"
+          event_title = "**#{User.current.name}**更新了Issue"
         when :journal_create
           issue = issue_or_journal.issue
           content = issue_or_journal.notes

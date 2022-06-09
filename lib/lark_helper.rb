@@ -6,18 +6,23 @@ require 'json'
 module Redmine
   module Helpers
     module Lark
-      def get_lark_issue_data(issue_or_journal)
+      def get_lark_issue_data(action, issue_or_journal)
         issue = nil
         event_title = ""
         content = ""
-        if issue_or_journal.is_a?(Issue)
+        case action
+        when :issue_create
           issue = issue_or_journal
           content = issue_or_journal.description
           event_title = "**#{issue_or_journal.author.name}**创建了Issue"
-        elsif issue_or_journal.is_a?(Journal)
+        when :issue_update
+          issue = issue_or_journal
+          content = ""
+          event_title = "**#{issue_or_journal.author.name}**更新了Issue"
+        when :journal_create
           issue = issue_or_journal.issue
           content = issue_or_journal.notes
-          event_title = "**#{issue_or_journal.user.name}**更新了Issue"
+          event_title = "**#{issue_or_journal.user.name}**回复了Issue"
         end
         custom_fields_data = issue.custom_field_values.map do |field|
           {

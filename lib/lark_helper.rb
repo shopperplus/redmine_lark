@@ -6,8 +6,7 @@ require 'json'
 module Redmine
   module Helpers
     module Lark
-
-      def self.get_lark_issue_data(issue_or_journal)
+      def get_lark_issue_data(issue_or_journal)
         issue = nil
         event_title = ""
         content = ""
@@ -125,7 +124,7 @@ module Redmine
         }
       end
 
-      def self.send_issue_event(data)
+      def send_issue_event(data)
         begin
           uri = URI.parse(Setting.plugin_redmine_lark['lark_bot_webhook_url'])
         rescue => e
@@ -173,7 +172,7 @@ module Redmine
         end
       end
 
-      def self.logger
+      def logger
         Rails.logger
       end
     end
